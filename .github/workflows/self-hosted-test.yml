@@ -1,0 +1,10 @@
+on:
+  push:
+    branches:
+    - master
+jobs:
+  job1:
+    runs-on: self-hosted
+    steps:
+      - name: Test
+        run: echo 'Test self-host runner on EC2'
