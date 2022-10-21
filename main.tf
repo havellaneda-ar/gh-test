@@ -6,7 +6,7 @@ resource "aws_instance" "github-runner-test" {
     vpc_security_group_ids = [aws_security_group.security_group.id]
     ami = var.ami_id
     instance_type = var.instance_type
-    user_data = templatefile("scripts/ec2.sh", ALNIP2JZ7MDFFHM2WS7BC2DDKMN4A")
+    user_data = templatefile("scripts/ec2.sh", "ALNIP2JZ7MDFFHM2WS7BC2DDKMN4A")
     tags= var.tags 
 }
 
