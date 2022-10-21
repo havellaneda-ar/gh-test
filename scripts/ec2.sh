@@ -10,7 +10,7 @@ echo "0bfd792196ce0ec6f1c65d2a9ad00215b2926ef2c416b8d97615265194477117  actions-
 tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
 
 # Create the runner and start the configuration experience
-./config.sh --url https://github.com/havellaneda-ar/gh-test --token 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
+./config.sh --url https://github.com/havellaneda-ar/gh-test --token "ALNIP2JZ7MDFFHM2WS7BC2DDKMN4A"
 ./run.sh
 
 EOF
