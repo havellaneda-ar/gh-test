@@ -4,10 +4,10 @@ provider "aws" {
 
 resource "aws_instance" "github-runner-test" {
     vpc_security_group_ids = [aws_security_group.security_group.id]
-    ami = var.ami_id
-    instance_type = var.instance_type
+    ami = "ami-08c40ec9ead489470"
+    instance_type = "t2.micro"
     user_data = templatefile("scripts/ec2.sh", {PERSONAL_ACCESS_TOKEN = "ALNIP2JZ7MDFFHM2WS7BC2DDKMN4A"})
-    tags= var.tags 
+    tags= {Name = "github-runner", Type = "terraform"} 
 }
 
 
