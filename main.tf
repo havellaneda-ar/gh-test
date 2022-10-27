@@ -7,7 +7,7 @@ resource "aws_instance" "github-runner-test" {
     ami = "ami-08c40ec9ead489470"
     instance_type = "t2.micro"
     user_data = "${file("scripts/ec2.sh")}"
-    tags= {Name = "github-runner", Type = "terraform"} 
+    tags= {Name = "github-runner", Type = "terraform"}
 }
 
 
