@@ -17,6 +17,12 @@ tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
 # Create the runner and start the configuration experience
 curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${GITHUB_TOKEN}" \
   https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token > token_output.txt
+ echo $GITHUB_TOKEN
+ echo ${GITHUB_TOKEN}
+ echo ${{GITHUB_TOKEN}}
+ echo "${GITHUB_TOKEN}"
+ echo "${{ inputs.GITHUB_TOKEN }}"
+echo "${{ secrets.GITHUB_TOKEN }}"
 
 token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
 
