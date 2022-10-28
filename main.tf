@@ -10,7 +10,6 @@ resource "aws_instance" "github-runner-test" {
     tags= {Name = "github-runner", Type = "terraform"}
 }
 
-
 resource "aws_security_group" "security_group" {
     name = "sec_group_github_runner"
 
