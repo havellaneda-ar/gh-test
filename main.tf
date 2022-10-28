@@ -6,7 +6,7 @@ resource "aws_instance" "github-runner-test" {
     vpc_security_group_ids = [aws_security_group.security_group.id]
     ami = "ami-08c40ec9ead489470"
     instance_type = "t2.micro"
-    user_data = "${file("scripts/ec2.sh")}"
+    user_data = templatefile("scripts/ec2.sh", {PERSONAL_ACCESS_TOKEN = $GITHUB_TOKEN})
     tags= {Name = "github-runner", Type = "terraform"}
 }
 
