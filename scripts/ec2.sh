@@ -11,12 +11,12 @@ tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
 
 # Create the runner and start the configuration experience
 
-TOKEN_TMP=$(curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer "$PERSONAL_ACCESS_TOKEN" \
-  https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token)
+curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer "$PERSONAL_ACCESS_TOKEN" \
+  https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token > out.txt
 
-TOKEN_RUNNER=$(echo "${TOKEN_TMP}" | grep -w "token" | cut -d'"' -f4)
+runner_token=$(cat out.txt | grep -w "token" | cut -d'"' -f4)
 
-./config.sh --url https://github.com/havellaneda-ar/gh-test --token ${TOKEN_RUNNER}
+./config.sh --url https://github.com/havellaneda-ar/gh-test --token ${runner_token}
 ./run.sh
 
 EOF
