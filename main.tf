@@ -31,7 +31,7 @@ curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 
 token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
 sudo chown ubuntu:ubuntu config.sh
 sudo chown ubuntu:ubuntu run.sh
-sudo chown -R ubuntu:ubuntu ubuntu
+sudo chown ubuntu:ubuntu ubuntu
 
 /bin/su -c "./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner --unattended" - ubuntu | tee ./config-data.log
 /bin/su -c "./run.sh" - ubuntu | tee ./run-data.log 
