@@ -20,7 +20,7 @@ tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
 curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN " \
   https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token > token_output.txt
 token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
-./config.sh --url https://github.com/havellaneda-ar/gh-test --token ${token_runner}
+./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner
 ./run.sh
   
 EOF
