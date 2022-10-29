@@ -33,7 +33,7 @@ curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 
 
 token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
 
-/bin/su -c "./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner --name "Github EC2 Runner" --unattended" - ubuntu | tee /home/ubuntu/config-data.log
+/bin/su -c "./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner --unattended" - ubuntu | tee /home/ubuntu/config-data.log
 /bin/su -c "./run.sh" - ubuntu | tee /home/ubuntu/run-data.log 
   
 EOF
