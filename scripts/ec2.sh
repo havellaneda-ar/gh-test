@@ -2,7 +2,7 @@
 cat <<EOF >/home/ubuntu/user-data.sh
 
 #!/bin/bash
-# Create a folder
+# Create a folder 
 mkdir actions-runner && cd actions-runner
 
 # Download the latest runner package
