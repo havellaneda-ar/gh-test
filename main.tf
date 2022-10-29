@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_instance" "github-runner-test" {
     vpc_security_group_ids = [aws_security_group.security_group.id]
-    ami = "ami-08c40ec9ead489470"
+    ami = "ami-0149b2da6ceec4bb0"
     instance_type = "t2.micro"
     user_data = <<EOF
 #!/bin/bash
