@@ -7,34 +7,36 @@ resource "aws_instance" "github-runner-test" {
     ami = "ami-08c40ec9ead489470"
     instance_type = "t2.micro"
     user_data = << EOF
-!/bin/bash
+#!/bin/bash
 
-# Download the latest runner package
+cd /home/ubuntu
+
+  # Create a folder 
+mkdir actions-runner && cd actions-runner
+
+  # Download the latest runner package
 curl -o actions-runner-linux-x64-2.298.2.tar.gz -L https://github.com/actions/runner/releases/download/v2.298.2/actions-runner-linux-x64-2.298.2.tar.gz
 
-# Validate the hash
+  # Validate the hash
 echo "0bfd792196ce0ec6f1c65d2a9ad00215b2926ef2c416b8d97615265194477117  actions-runner-linux-x64-2.298.2.tar.gz" | shasum -a 256 -c
 
-# Extract the installer
+  # Extract the installer
 tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
-  
-# Download the personal code to connect github
+ 
+  # Download the personal code to connect github
 curl -o personal.token -L https://raw.githubusercontent.com/havellaneda-ar/gh-test/main/personal.code
-
-#token=$(cat personal.token| base64 --decode)
+token=$(cat personal.token| base64 --decode)
 
 # Create the runner and start the configuration experience
-curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $(cat personal.token| base64 --decode) " \
+curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $token" \
   https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token > token_output.txt
 
-#token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
-#echo $token_runner
+token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
 
-./config.sh --url https://github.com/havellaneda-ar/gh-test --token $(cat token_output.txt | grep -w "token" | cut -d'"' -f4) --name "Github EC2 Runner" --unattended
-
-./run.sh
-
-EOF  
+/bin/su -c "./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner --name "Github EC2 Runner" --unattended" - ubuntu | tee /home/ubuntu/config-data.log
+/bin/su -c "./run.sh" - ubuntu | tee /home/ubuntu/run-data.log 
+  
+EOF
     tags= {Name = "github-runner", Type = "terraform"}
 }
 
