@@ -9,6 +9,7 @@ resource "aws_instance" "github-runner-test" {
     user_data = <<EOF
 #!/bin/bash
 
+sudo chown -R ubuntu:ubuntu ubuntu
 cd /home/ubuntu
 
   # Download the latest runner package
@@ -29,9 +30,11 @@ curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 
   https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token > token_output.txt
 
 token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
+sudo chown ubuntu:ubuntu config.sh
+sudo chown ubuntu:ubuntu run.sh
 
-/bin/su -c "./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner --unattended" - ubuntu | tee ./config-data.log
-/bin/su -c "./run.sh" - ubuntu | tee ./run-data.log 
+./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner --unattended - ubuntu | tee ./config-data.log
+./run.sh - ubuntu | tee ./run-data.log 
   
 EOF
     tags= {Name = "github-runner", Type = "terraform"}
