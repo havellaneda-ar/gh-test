@@ -16,16 +16,18 @@ tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
   
 # Download the personal code to connect github
 curl -o personal.token -L https://raw.githubusercontent.com/havellaneda-ar/gh-test/main/personal.code
-token=$(cat personal.token| base64 --decode)
+
+#token=$(cat personal.token| base64 --decode)
 
 # Create the runner and start the configuration experience
-curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $token" \
+curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $(cat personal.token| base64 --decode)" \
   https://api.github.com/repos/havellaneda-ar/gh-test/actions/runners/registration-token > token_output.txt
-token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
 
-echo $token_runner
 
-./config.sh --url https://github.com/havellaneda-ar/gh-test --token $token_runner
+#token_runner=$(cat token_output.txt | grep -w "token" | cut -d'"' -f4)
+#echo $token_runner
+
+./config.sh --url https://github.com/havellaneda-ar/gh-test --token $(cat token_output.txt | grep -w "token" | cut -d'"' -f4) --name "Github EC2 Runner" --unattended
 ./run.sh
 
 EOF
